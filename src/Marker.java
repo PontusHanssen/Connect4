@@ -1,5 +1,5 @@
 
 public enum Marker {
 
-	RED, YELLOW, EMPTY
+	RED, YELLOW, EMPTY; 
 }
