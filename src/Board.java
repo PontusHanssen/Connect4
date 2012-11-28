@@ -4,7 +4,6 @@ public class Board {
 
 	private final Color color = Color.blue;
 	private Marker[][] board;
-
 	public Board(int rows, int cols) {
 		board = new Marker[rows][cols];
 		for (Marker currentRow[] : board) {
@@ -28,7 +27,7 @@ public class Board {
 		if (possibleMove(col)) {
 			for (int i = 0; i < board.length; i++) {
 				if (board[i][col] == Marker.EMPTY) {
-					board[i][col] = Player.color;
+					board[i][col] = player.getColor();
 					return;
 				}
 
@@ -39,4 +38,8 @@ public class Board {
 
 	}
 
+	public Marker[][] getBoard() {
+		return this.board;
+	}
+	
 }
