@@ -11,6 +11,10 @@ public class Player implements Cloneable {
 	public Marker getColor() {
 		return this.color; 
 	}
+	
+	public int getMoves(){
+		return this.moves; 
+	}
 	}
 	
 	

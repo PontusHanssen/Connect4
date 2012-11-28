@@ -42,4 +42,7 @@ public class Board {
 		return this.board;
 	}
 	
+	public Color getColor() {
+		return color;
+	}
 }
