@@ -31,6 +31,7 @@ public class Board {
 			for (int i = 0; i < board.length; i++) {
 				if (board[i][col] == MarkerType.EMPTY) {
 					board[i][col] = player.getColor();
+					int pos = (rows * i) + col;
 					return;
 				}
 
@@ -41,6 +42,7 @@ public class Board {
 
 	}
 
+	
 	public MarkerType[][] getBoard() {
 		return this.board;
 	}
