@@ -11,6 +11,7 @@ import javax.swing.event.MouseInputListener;
 public class Marker extends JPanel {
 	private Color color;
 	private int pos;
+	JLabel poslabel;
 
 	public Marker(MarkerType color, int pos) {
 		this.pos = pos;
@@ -25,6 +26,9 @@ public class Marker extends JPanel {
 			this.color = Color.YELLOW;
 			break;
 		}
+		
+		poslabel = new JLabel(String.valueOf(pos/7) + "/" + String.valueOf(pos%7));
+		add(poslabel);
 	}
 
 	public void setNewColor() {

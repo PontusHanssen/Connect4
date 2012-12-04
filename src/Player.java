@@ -2,7 +2,7 @@
 public class Player implements Cloneable {
 	
 	private MarkerType color;
-	public int moves=0; 
+	public int moves=0;
 	
 	public Player(MarkerType color) {
 		this.color = color;   

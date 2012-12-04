@@ -47,7 +47,7 @@ public class Game extends JFrame implements MouseListener {
 		containerPanel.setLayout(gridbagLayoutSettings);
 		GridBagConstraints gb = new GridBagConstraints();
 		
-		statsPanel.add(new JLabel("lol"));
+		statsPanel.add(new JLabel(String.valueOf(currentPlayer.moves)));
 		statsPanel.setBackground(board.getColor());
 		
 		
@@ -68,16 +68,19 @@ public class Game extends JFrame implements MouseListener {
 			
 		}
 		gamePanel.setBackground(Board.getColor());
-		gb.weighty = 1.0;
+		gb.weighty = 0.0;
 		gb.weightx = 1.0;
 		gb.gridx=0;
 		gb.gridy=0;
+		//gb.gridheight=1;
 		gb.fill = GridBagConstraints.HORIZONTAL;
 		
 		containerPanel.add(statsPanel, gb);
 		
 		gb.gridx=0;
 		gb.gridy=1;
+		gb.weighty = 1.0;
+		gb.weightx = 1.0;
 		gb.fill = GridBagConstraints.BOTH;
 		containerPanel.add(gamePanel, gb);
 		add(containerPanel);
@@ -117,10 +120,11 @@ public class Game extends JFrame implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Marker clicked = (Marker) e.getSource();
+		System.out.println(clicked.getPos());
 		try {
 			board.placeMove(clicked.getPos(), currentPlayer);
 			currentPlayer.moves++;
-			if(board.getMarkerType(clicked.getPos()) == board.checkWin()){
+			if(currentPlayer.getColor() == board.checkWin()){
 				System.out.println("WINWINWIN" + board.checkWin());
 			}
 			if(currentPlayer == p1){
