@@ -1,38 +1,49 @@
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import sun.font.EAttribute;
+
+@SuppressWarnings("serial")
 public class Game extends JFrame implements MouseListener {
 	public static Board board;
 	private JPanel gamePanel, statsPanel, containerPanel;
-	private int winWidth, winHeight, rows, cols;
-	private Player p1 = new Player(MarkerType.RED);
-	private Player p2 = new Player(MarkerType.YELLOW); 
+	private boolean bot=true;
+	private int rows, cols;
+	private Player playerRed = new Player(MarkerType.RED);
+	private Player playerYellow = new Player(MarkerType.YELLOW);
+	private AI botEasy = new AI(MarkerType.YELLOW);
 	private Player currentPlayer;
+	private JLabel text;
 
+	/**
+	 * Creates new game of Connect 4.
+	 * 
+	 * @param winWidth
+	 *            Game window width.
+	 * @param winHeight
+	 *            Game window height.
+	 * @param cols
+	 *            Number of columns on board.
+	 * @param rows
+	 *            Number of rows on board.
+	 */
+	@SuppressWarnings("static-access")
 	public Game(int winWidth, int winHeight, int cols, int rows) {
 		super("Fyra i rad");
-		this.rows = rows;
+		currentPlayer = playerRed;
 		this.cols = cols;
-		this.winWidth = winWidth;
-		this.winHeight = winHeight;
-		currentPlayer = p1;
+		this.rows =rows;
 
 		board = new Board(rows, cols);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,54 +54,57 @@ public class Game extends JFrame implements MouseListener {
 		containerPanel = new JPanel();
 		statsPanel = new JPanel();
 		gamePanel = new JPanel(new GridLayout(rows, cols));
+
 		GridBagLayout gridbagLayoutSettings = new GridBagLayout();
 		containerPanel.setLayout(gridbagLayoutSettings);
+
 		GridBagConstraints gb = new GridBagConstraints();
-		
-		statsPanel.add(new JLabel(String.valueOf(currentPlayer.moves)));
+
+		text = new JLabel("Red player: 0 Yellow player: 0");
+		text.setForeground(Color.white);
+		text.setFont(new Font("Serif", Font.BOLD, 20));
+		statsPanel.setBorder(BorderFactory.createLineBorder(Color.white, 5));
+		statsPanel.add(text);
 		statsPanel.setBackground(board.getColor());
-		
-		
-		
-		
-		
-		
-		for(int pos=(rows*cols)-cols; pos>=0; pos-=cols) {
-			
-			
-			for(int i = 0; i<cols; i++) {
-				//panel.add(new Marker(board.getMarkerPos(pos+i), pos+i));
-				Marker marker = new Marker(board.getMarkerType(pos+i), pos+i);
+
+		for (int pos = (rows * cols) - cols; pos >= 0; pos -= cols) {
+
+			for (int i = 0; i < cols; i++) {
+				// panel.add(new Marker(board.getMarkerPos(pos+i), pos+i));
+				Marker marker = new Marker(board.getMarkerType(pos + i), pos
+						+ i);
 				marker.addMouseListener(this);
 				gamePanel.add(marker);
-				
+
 			}
-			
+
 		}
 		gamePanel.setBackground(Board.getColor());
 		gb.weighty = 0.0;
 		gb.weightx = 1.0;
-		gb.gridx=0;
-		gb.gridy=0;
-		//gb.gridheight=1;
+		gb.gridx = 0;
+		gb.gridy = 0;
+		// gb.gridheight=1;
 		gb.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		containerPanel.add(statsPanel, gb);
-		
-		gb.gridx=0;
-		gb.gridy=1;
+
+		gb.gridx = 0;
+		gb.gridy = 1;
 		gb.weighty = 1.0;
 		gb.weightx = 1.0;
 		gb.fill = GridBagConstraints.BOTH;
 		containerPanel.add(gamePanel, gb);
 		add(containerPanel);
 		setVisible(true);
-		
-		runGame();
 
-		
 	}
 
+	/**
+	 * Starts a new thread for GUI.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -98,73 +112,104 @@ public class Game extends JFrame implements MouseListener {
 				int x = ((int) tk.getScreenSize().getWidth());
 				int y = ((int) tk.getScreenSize().getHeight());
 				new Game(x, y, 7, 6);
-				
-				
-				
+
 			}
 		});
-		
+
 	}
 
+	/**
+	 * 
+	 * @param pos
+	 *            Position on board.
+	 * @return Returns the MarkerType currently occupying the position.
+	 */
 	public static MarkerType getBoardMarker(int pos) {
 		return board.getMarkerType(pos);
 	}
-	
-	public void runGame() {
 
-		
-
-
-	}
-
+	/**
+	 * Actions to perform when mouse is clicked.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Marker clicked = (Marker) e.getSource();
-		System.out.println(clicked.getPos());
-		try {
-			board.placeMove(clicked.getPos(), currentPlayer);
-			currentPlayer.moves++;
-			if(currentPlayer.getColor() == board.checkWin()){
-				System.out.println("WINWINWIN" + board.checkWin());
-			}
-			if(currentPlayer == p1){
-				currentPlayer = p2;
-				
-			}
-			else{
-				currentPlayer = p1;
-				
-			}
-		} catch (NoSpaceLeftInColumnException e1) {
-			
+		int pos = clicked.getPos();
+		if(bot) {
+			humanBot(pos);
+			text.setText("Red player: " + playerRed.getMoves()
+					+ "    Yellow player: " + botEasy.getMoves());
+
 		}
+		else {
+			humanHuman(pos);
+			text.setText("Red player: " + playerRed.getMoves()
+					+ "    Yellow player: " + playerYellow.getMoves());
+		}
+		
 		repaint();
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public void humanHuman(int pos) {
+		try {
+		board.placeMove(pos, currentPlayer);
+		currentPlayer.moves++;
+		if (currentPlayer.getColor() == board.checkWin()) {
+			System.out.println(currentPlayer.getColor() + " won!");
+			new WinDialog(currentPlayer);
+		}
+		if (currentPlayer == playerRed) {
+			currentPlayer = playerYellow;
+
+		} else {
+			currentPlayer = playerRed;
+
+		}
+	} catch (NoSpaceLeftInColumnException e1) {
+
+	}
 		
 	}
 
+	public void humanBot(int pos) {
+		try {
+			board.placeMove(pos, currentPlayer);
+			currentPlayer.moves++;
+			if(board.checkWin()==currentPlayer.getColor()){
+				new WinDialog(currentPlayer);
+			}
+			board.placeMove(botEasy.makeMoveEasy(board.clone(), rows*cols), botEasy);
+			botEasy.moves++;
+			if(board.checkWin() == botEasy.getColor()){
+				new WinDialog(botEasy);
+			}
+		} catch (NoSpaceLeftInColumnException e1) {
+
+		}
+		
+	}
 }
-
-

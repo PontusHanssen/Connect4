@@ -1,13 +1,9 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputListener;
 
+@SuppressWarnings("serial")
 public class Marker extends JPanel {
 	private Color color;
 	private int pos;
@@ -27,8 +23,8 @@ public class Marker extends JPanel {
 			break;
 		}
 		
-		poslabel = new JLabel(String.valueOf(pos/7) + "/" + String.valueOf(pos%7));
-		add(poslabel);
+//		poslabel = new JLabel(String.valueOf(pos/7) + "/" + String.valueOf(pos%7));
+//		add(poslabel);
 	}
 
 	public void setNewColor() {
