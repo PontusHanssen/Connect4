@@ -18,7 +18,7 @@ import sun.font.EAttribute;
 public class Game extends JFrame implements MouseListener {
 	public static Board board;
 	private JPanel gamePanel, statsPanel, containerPanel;
-	private boolean bot=true;
+	public boolean bot=false;
 	private int rows, cols;
 	private Player playerRed = new Player(MarkerType.RED);
 	private Player playerYellow = new Player(MarkerType.YELLOW);
@@ -97,6 +97,7 @@ public class Game extends JFrame implements MouseListener {
 		containerPanel.add(gamePanel, gb);
 		add(containerPanel);
 		setVisible(true);
+		new StartDialog(this);
 
 	}
 
@@ -179,8 +180,7 @@ public class Game extends JFrame implements MouseListener {
 		board.placeMove(pos, currentPlayer);
 		currentPlayer.moves++;
 		if (currentPlayer.getColor() == board.checkWin()) {
-			System.out.println(currentPlayer.getColor() + " won!");
-			new WinDialog(currentPlayer);
+			new WinDialog(currentPlayer, this);
 		}
 		if (currentPlayer == playerRed) {
 			currentPlayer = playerYellow;
@@ -200,16 +200,29 @@ public class Game extends JFrame implements MouseListener {
 			board.placeMove(pos, currentPlayer);
 			currentPlayer.moves++;
 			if(board.checkWin()==currentPlayer.getColor()){
-				new WinDialog(currentPlayer);
+				new WinDialog(currentPlayer, this);
 			}
+			if(board.checkWin() == MarkerType.EMPTY){
 			board.placeMove(botEasy.makeMoveEasy(board.clone(), rows*cols), botEasy);
 			botEasy.moves++;
+			}
 			if(board.checkWin() == botEasy.getColor()){
-				new WinDialog(botEasy);
+				new WinDialog(botEasy, this);
 			}
 		} catch (NoSpaceLeftInColumnException e1) {
 
 		}
 		
 	}
+
+public void resetGame(){
+	board.emptyBoard();
+	playerRed.moves=0;
+	playerYellow.moves=0;
+	botEasy.moves=0;
+	text.setText("Red player: 0 Yellow player: 0");
+	repaint();
+	new StartDialog(this);
+}
+
 }

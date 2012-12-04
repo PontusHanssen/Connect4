@@ -1,5 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -22,9 +25,10 @@ public class Marker extends JPanel {
 			this.color = Color.YELLOW;
 			break;
 		}
-		
-//		poslabel = new JLabel(String.valueOf(pos/7) + "/" + String.valueOf(pos%7));
-//		add(poslabel);
+
+		// poslabel = new JLabel(String.valueOf(pos/7) + "/" +
+		// String.valueOf(pos%7));
+		// add(poslabel);
 	}
 
 	public void setNewColor() {
@@ -45,19 +49,22 @@ public class Marker extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub
-		super.paint(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_QUALITY);
+		super.paint(g2d);
 		setNewColor();
 		setBackground(Board.getColor());
-		g.setColor(color);
+		g2d.setColor(color);
 
-		g.fillOval((getWidth() - 90) / 2, (getHeight() - 90) / 2, 90, 90);
+		g2d.fillOval((getWidth() - 90) / 2, (getHeight() - 90) / 2, 90, 90);
 
 	}
 
 	public int getPos() {
 		return pos;
 	}
-
-	
 
 }

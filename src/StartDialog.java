@@ -3,66 +3,70 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-@SuppressWarnings("serial")
-public class WinDialog extends JDialog implements MouseListener{
+public class StartDialog extends JDialog implements MouseListener{
+	
 	private JPanel panel;
-	private JLabel text;
-	private JButton newGame, exit;
+	private JButton human, bot;
 	private Game game;
-	public WinDialog(Player player, Game game) {
-		this.game = game;
-		
+	
+	public StartDialog(Game game){
 		setSize(250, 100);
 		setResizable(true);
 		setLocationRelativeTo(null);
-	
-		text = new JLabel("Player " + player.getColor() + " won after " + player.moves + " moves!");
-		newGame = new JButton("New game");
-		exit = new JButton("Exit game");
-		exit.addMouseListener(this);
-		newGame.addMouseListener(this);
-		panel = new JPanel();
 		
-		panel.add(text);
-		panel.add(newGame);
-		panel.add(exit);
+		this.game = game;
+		panel = new JPanel();
+		human = new JButton("Human VS Human");
+		bot = new JButton("Human VS Bot");
+		human.addMouseListener(this);
+		bot.addMouseListener(this);
+		
+		panel.add(human);
+		panel.add(bot);
 		add(panel);
+		
+
 		setVisible(true);
 	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-			if(e.getSource().equals(newGame)){
-			game.resetGame();
-			dispose();
-			}
-			else if(e.getSource().equals(exit)) {
-				System.exit(0);
-			}
-		
+
+		if(e.getSource().equals(human)) {
+			game.bot = false;
+		}
+		else if(e.getSource().equals(bot)) {
+			game.bot = true;
+		}
+		dispose();
 		
 	}
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

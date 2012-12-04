@@ -21,7 +21,6 @@ public class AI extends Player {
 				workingBoard.placeMove(i, this);
 				if (workingBoard.checkWin() == this.getColor()) {
 					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
-					System.out.println("lol");
 					return i;
 					
 				} else {

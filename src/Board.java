@@ -140,7 +140,14 @@ public class Board implements Cloneable {
 		return color;
 	}
 
-
+	public void emptyBoard() {
+		for(int i = 0;i<rows;i++) {
+			for(int k = 0;k<cols;k++) {
+				board[i][k] = MarkerType.EMPTY;
+			}
+		}
+	}
+	
 	public Board clone() {
 		Board cloneBoard = new Board(rows, cols);
 		for(int i=0; i<rows; i++) {
