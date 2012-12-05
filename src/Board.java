@@ -43,6 +43,12 @@ public class Board implements Cloneable {
 		return false;
 	}
 
+	/**
+	 * Places a marker when a move is made.
+	 * @param pos Position selected by player.
+	 * @param player Current player.
+	 * @throws NoSpaceLeftInColumnException Thrown when column is filled.
+	 */
 	public void placeMove(int pos, Player player)
 			throws NoSpaceLeftInColumnException {
 		int col = pos % cols;
@@ -60,7 +66,10 @@ public class Board implements Cloneable {
 		}
 
 	}
-
+/**
+ * Checks if there is a winner.
+ * @return MarkerType of winner.
+ */
 	public MarkerType checkWin() {
 		// horizontal
 		MarkerType win = MarkerType.EMPTY;
@@ -119,16 +128,30 @@ public class Board implements Cloneable {
 
 	}
 
+	/**
+	 * 
+	 * @return Returns the current game board.
+	 */
 	public MarkerType[][] getBoard() {
 		return this.board;
 	}
 
+	/**
+	 * Sets a MarkerType to a position on the board.
+	 * @param pos Position for MarkerType to be placed in.
+	 * @param markertype The MarkerType that should be placed in the position.
+	 */
 	public void setMarkerPos(int pos, MarkerType markertype) {
 		int row = pos / cols;
 		int col = pos % cols;
 		board[row][col] = markertype;
 	}
 
+	/**
+	 * Checks what MarkerType there is in a certain position.
+	 * @param pos Position to be checked.
+	 * @return Returns the MarkerType of the position.
+	 */
 	public MarkerType getMarkerType(int pos) {
 
 		int row = pos / cols;
@@ -136,10 +159,17 @@ public class Board implements Cloneable {
 		return board[row][col];
 	}
 
+	/**
+	 * 
+	 * @return Returns the color of the board.
+	 */
 	public static Color getColor() {
 		return color;
 	}
 
+	/**
+	 * Removes all markers from the board.
+	 */
 	public void emptyBoard() {
 		for(int i = 0;i<rows;i++) {
 			for(int k = 0;k<cols;k++) {
@@ -148,6 +178,9 @@ public class Board implements Cloneable {
 		}
 	}
 	
+	/**
+	 * Clones the current game board.
+	 */
 	public Board clone() {
 		Board cloneBoard = new Board(rows, cols);
 		for(int i=0; i<rows; i++) {

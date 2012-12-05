@@ -30,7 +30,10 @@ public class Marker extends JPanel {
 		// String.valueOf(pos%7));
 		// add(poslabel);
 	}
-
+	
+	/**
+	 * Sets new color to a position(a circle that is drawn) when a marker has been placed.
+	 */
 	public void setNewColor() {
 		MarkerType marker = Game.getBoardMarker(pos);
 		switch (marker) {
@@ -63,6 +66,10 @@ public class Marker extends JPanel {
 
 	}
 
+	/**
+	 * 
+	 * @return Returns the position of the marker.
+	 */
 	public int getPos() {
 		return pos;
 	}

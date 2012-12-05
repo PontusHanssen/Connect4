@@ -8,10 +8,18 @@ public class Player implements Cloneable {
 		this.color = color;   
 		}
 	
+	/**
+	 * 
+	 * @return Returns the MarkerType of the player.
+	 */
 	public MarkerType getColor() {
 		return this.color; 
 	}
 	
+	/**
+	 * 
+	 * @return Returns the number of moved made by the player.
+	 */
 	public int getMoves(){
 		return this.moves; 
 	}

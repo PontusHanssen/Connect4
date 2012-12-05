@@ -97,8 +97,10 @@ public class Game extends JFrame implements MouseListener {
 		containerPanel.add(gamePanel, gb);
 		add(containerPanel);
 		setVisible(true);
+		
 		new StartDialog(this);
-
+		
+	
 	}
 
 	/**
@@ -175,6 +177,10 @@ public class Game extends JFrame implements MouseListener {
 
 	}
 
+	/**
+	 * Performs the moves and checks for winner when playing human vs. human.
+	 * @param pos Position selected for move.
+	 */
 	public void humanHuman(int pos) {
 		try {
 		board.placeMove(pos, currentPlayer);
@@ -194,7 +200,10 @@ public class Game extends JFrame implements MouseListener {
 	}
 		
 	}
-
+/**
+ * Performs the moves and checks for winner when playing human vs. bot.
+ * @param pos Position selected for move.
+ */
 	public void humanBot(int pos) {
 		try {
 			board.placeMove(pos, currentPlayer);
@@ -215,6 +224,9 @@ public class Game extends JFrame implements MouseListener {
 		
 	}
 
+	/**
+	 * Resets the game.
+	 */
 public void resetGame(){
 	board.emptyBoard();
 	playerRed.moves=0;

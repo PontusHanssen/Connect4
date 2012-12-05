@@ -33,6 +33,10 @@ public class WinDialog extends JDialog implements MouseListener{
 		add(panel);
 		setVisible(true);
 	}
+	
+	/**
+	 * Performs action when a button is clicked.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 			if(e.getSource().equals(newGame)){
