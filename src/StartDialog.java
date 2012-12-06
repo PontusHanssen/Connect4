@@ -43,7 +43,7 @@ public class StartDialog extends JDialog implements MouseListener{
 		}
 		else if(e.getSource().equals(bot)) {
 			game.bot = true;
-				new LevelDialog(); 
+				new LevelDialog(game); 
 		}
 		dispose();
 		

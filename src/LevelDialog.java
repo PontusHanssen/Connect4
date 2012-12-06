@@ -11,10 +11,11 @@ import javax.swing.JPanel;
 public class LevelDialog extends JDialog implements MouseListener{
 	private JPanel panel;
 	private JLabel levelChoice;
-	private JButton easy;
+	private JButton easy, medium, hard; 
+	private Game game; 
 	
-	public LevelDialog() {
-	
+	public LevelDialog(Game game) {
+		this.game = game; 
 		
 		setSize(300, 100);
 		setResizable(true);
@@ -23,10 +24,16 @@ public class LevelDialog extends JDialog implements MouseListener{
 		levelChoice = new JLabel("What level do you want to play?");
 		easy = new JButton("Easy");
 		easy.addMouseListener(this);
+		medium = new JButton("Medium");
+		medium.addMouseListener(this);
+		hard = new JButton("Hard");
+		hard.addMouseListener(this);
 		panel = new JPanel();
 		
 		panel.add(levelChoice);
 		panel.add(easy);
+		panel.add(medium);
+		panel.add(hard);
 		add(panel);
 		setVisible(true);
 	}
@@ -37,9 +44,16 @@ public class LevelDialog extends JDialog implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 			if(e.getSource().equals(easy)){
+			game.botPlayer.setLevel("Easy"); 
 			dispose();
 			}
+			else if(e.getSource().equals(medium)) {
+			game.botPlayer.setLevel("Medium"); 
+			dispose();	
+			}
 			else {
+			game.botPlayer.setLevel("Hard"); 
+			dispose();
 			}
 		
 		

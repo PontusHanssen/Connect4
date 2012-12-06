@@ -5,6 +5,7 @@ import java.awt.RenderingHints;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class Marker extends JPanel {
@@ -26,9 +27,6 @@ public class Marker extends JPanel {
 			break;
 		}
 
-		// poslabel = new JLabel(String.valueOf(pos/7) + "/" +
-		// String.valueOf(pos%7));
-		// add(poslabel);
 	}
 	
 	/**
@@ -62,7 +60,7 @@ public class Marker extends JPanel {
 		setBackground(Board.getColor());
 		g2d.setColor(color);
 
-		g2d.fillOval((getWidth() - 90) / 2, (getHeight() - 90) / 2, 90, 90);
+		g2d.fillOval((getWidth() - 80) / 2, (getHeight() - 80) / 2, 80, 80);
 
 	}
 

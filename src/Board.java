@@ -4,7 +4,7 @@ public class Board implements Cloneable {
 
 	private final static Color color = Color.blue;
 	private MarkerType[][] board;
-	private int cols, rows;
+	public int cols, rows;
 
 	/**
 	 * Creates new game board.
@@ -56,7 +56,7 @@ public class Board implements Cloneable {
 			for (int i = 0; i < board.length; i++) {
 				if (board[i][col] == MarkerType.EMPTY) {
 					board[i][col] = player.getColor();
-
+					player.moves++;
 					return;
 				}
 
@@ -66,10 +66,11 @@ public class Board implements Cloneable {
 		}
 
 	}
-/**
- * Checks if there is a winner.
- * @return MarkerType of winner.
- */
+	
+	/**
+	 * Checks if there is a winner.
+	 * @return MarkerType of winner.
+	 */
 	public MarkerType checkWin() {
 		// horizontal
 		MarkerType win = MarkerType.EMPTY;

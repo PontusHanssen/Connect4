@@ -18,11 +18,11 @@ import sun.font.EAttribute;
 public class Game extends JFrame implements MouseListener {
 	public static Board board;
 	private JPanel gamePanel, statsPanel, containerPanel;
-	public boolean bot=false;
+	public boolean bot = false;
 	private int rows, cols;
 	private Player playerRed = new Player(MarkerType.RED);
 	private Player playerYellow = new Player(MarkerType.YELLOW);
-	private AI botEasy = new AI(MarkerType.YELLOW);
+	public AI botPlayer = new AI(MarkerType.YELLOW, "Easy");
 	private Player currentPlayer;
 	private JLabel text;
 
@@ -43,14 +43,13 @@ public class Game extends JFrame implements MouseListener {
 		super("Fyra i rad");
 		currentPlayer = playerRed;
 		this.cols = cols;
-		this.rows =rows;
+		this.rows = rows;
 
 		board = new Board(rows, cols);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(winWidth, winHeight);
 		setResizable(true);
 		setLocationRelativeTo(null);
-		setUndecorated(true);
 		containerPanel = new JPanel();
 		statsPanel = new JPanel();
 		gamePanel = new JPanel(new GridLayout(rows, cols));
@@ -97,10 +96,9 @@ public class Game extends JFrame implements MouseListener {
 		containerPanel.add(gamePanel, gb);
 		add(containerPanel);
 		setVisible(true);
-		
+
 		new StartDialog(this);
-		
-	
+
 	}
 
 	/**
@@ -111,10 +109,7 @@ public class Game extends JFrame implements MouseListener {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				Toolkit tk = Toolkit.getDefaultToolkit();
-				int x = ((int) tk.getScreenSize().getWidth());
-				int y = ((int) tk.getScreenSize().getHeight());
-				new Game(x, y, 7, 6);
+				new Game(800, 600, 7, 6);
 
 			}
 		});
@@ -138,13 +133,12 @@ public class Game extends JFrame implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		Marker clicked = (Marker) e.getSource();
 		int pos = clicked.getPos();
-		if(bot) {
+		if (bot) {
 			humanBot(pos);
 			text.setText("Red player: " + playerRed.getMoves()
-					+ "    Yellow player: " + botEasy.getMoves());
+					+ "    Yellow player: " + botPlayer.getMoves());
 
-		}
-		else {
+		} else {
 			humanHuman(pos);
 			text.setText("Red player: " + playerRed.getMoves()
 					+ "    Yellow player: " + playerYellow.getMoves());
@@ -179,62 +173,66 @@ public class Game extends JFrame implements MouseListener {
 
 	/**
 	 * Performs the moves and checks for winner when playing human vs. human.
-	 * @param pos Position selected for move.
+	 * 
+	 * @param pos
+	 *            Position selected for move.
 	 */
 	public void humanHuman(int pos) {
 		try {
-		board.placeMove(pos, currentPlayer);
-		currentPlayer.moves++;
-		if (currentPlayer.getColor() == board.checkWin()) {
-			new WinDialog(currentPlayer, this);
-		}
-		if (currentPlayer == playerRed) {
-			currentPlayer = playerYellow;
-
-		} else {
-			currentPlayer = playerRed;
-
-		}
-	} catch (NoSpaceLeftInColumnException e1) {
-
-	}
-		
-	}
-/**
- * Performs the moves and checks for winner when playing human vs. bot.
- * @param pos Position selected for move.
- */
-	public void humanBot(int pos) {
-		try {
-			board.placeMove(pos, currentPlayer);
-			currentPlayer.moves++;
-			if(board.checkWin()==currentPlayer.getColor()){
+			board.placeMove(pos, currentPlayer);;
+			if (currentPlayer.getColor() == board.checkWin()) {
 				new WinDialog(currentPlayer, this);
 			}
-			if(board.checkWin() == MarkerType.EMPTY){
-			board.placeMove(botEasy.makeMoveEasy(board.clone(), rows*cols), botEasy);
-			botEasy.moves++;
-			}
-			if(board.checkWin() == botEasy.getColor()){
-				new WinDialog(botEasy, this);
+			if (currentPlayer == playerRed) {
+				currentPlayer = playerYellow;
+
+			} else {
+				currentPlayer = playerRed;
+
 			}
 		} catch (NoSpaceLeftInColumnException e1) {
 
 		}
-		
+
+	}
+
+	/**
+	 * Performs the moves and checks for winner when playing human vs. bot.
+	 * 
+	 * @param pos
+	 *            Position selected for move.
+	 */
+	public void humanBot(int pos) {
+		try {
+			board.placeMove(pos, currentPlayer);
+			if (board.checkWin() == currentPlayer.getColor()) {
+				new WinDialog(currentPlayer, this);
+			}
+			if (board.checkWin() == MarkerType.EMPTY) {
+				board.placeMove(
+						botPlayer.getMove(board, rows*cols-1),
+						botPlayer);
+			}
+			if (board.checkWin() == botPlayer.getColor()) {
+				new WinDialog(botPlayer, this);
+			}
+		} catch (NoSpaceLeftInColumnException e1) {
+
+		}
+
 	}
 
 	/**
 	 * Resets the game.
 	 */
-public void resetGame(){
-	board.emptyBoard();
-	playerRed.moves=0;
-	playerYellow.moves=0;
-	botEasy.moves=0;
-	text.setText("Red player: 0 Yellow player: 0");
-	repaint();
-	new StartDialog(this);
-}
+	public void resetGame() {
+		board.emptyBoard();
+		playerRed.moves = 0;
+		playerYellow.moves = 0;
+		botPlayer.moves = 0;
+		text.setText("Red player: 0 Yellow player: 0");
+		repaint();
+		new StartDialog(this);
+	}
 
 }
