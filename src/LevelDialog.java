@@ -1,3 +1,6 @@
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -17,10 +20,11 @@ public class LevelDialog extends JDialog implements MouseListener{
 	public LevelDialog(Game game) {
 		this.game = game; 
 		
-		setSize(300, 100);
+		setSize(300, 200);
 		setResizable(true);
 		setLocationRelativeTo(null);
 	
+		
 		levelChoice = new JLabel("What level do you want to play?");
 		easy = new JButton("Easy");
 		easy.addMouseListener(this);
@@ -28,14 +32,45 @@ public class LevelDialog extends JDialog implements MouseListener{
 		medium.addMouseListener(this);
 		hard = new JButton("Hard");
 		hard.addMouseListener(this);
-		panel = new JPanel();
+		panel = new JPanel(new GridBagLayout());
+	
+		GridBagConstraints gb = new GridBagConstraints();
+
 		
-		panel.add(levelChoice);
-		panel.add(easy);
-		panel.add(medium);
-		panel.add(hard);
+		levelChoice.setBackground(Board.getColor());
+		gb.weighty = 0.0;
+		gb.weightx = 1.0;
+		gb.gridx = 0;
+		gb.gridy = 0;
+		// gb.gridheight=1;
+		gb.fill = GridBagConstraints.HORIZONTAL;
+
+		panel.add(levelChoice, gb);
+
+		gb.gridx = 0;
+		gb.gridy = 1;
+		gb.weighty = 1.0;
+		gb.weightx = 1.0;
+		gb.fill = GridBagConstraints.HORIZONTAL; 
+		panel.add(easy,gb);
+		
+		gb.gridx = 0;
+		gb.gridy = 2;
+		gb.weighty = 1.0;
+		gb.weightx = 1.0;
+		gb.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(medium,gb);
+		
+		gb.gridx = 0;
+		gb.gridy = 3;
+		gb.weighty = 1.0;
+		gb.weightx = 1.0;
+		gb.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(hard,gb);
+
 		add(panel);
 		setVisible(true);
+		
 	}
 	
 	/**

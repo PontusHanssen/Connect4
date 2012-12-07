@@ -5,7 +5,7 @@ public class AI extends Player {
 	String level;
 
 	public AI(MarkerType color, String level) {
-		super(color);
+		super(color, "Bot");
 		this.level = level;
 	}
 

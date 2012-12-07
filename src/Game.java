@@ -20,8 +20,8 @@ public class Game extends JFrame implements MouseListener {
 	private JPanel gamePanel, statsPanel, containerPanel;
 	public boolean bot = false;
 	private int rows, cols;
-	private Player playerRed = new Player(MarkerType.RED);
-	private Player playerYellow = new Player(MarkerType.YELLOW);
+	public Player playerRed = new Player(MarkerType.RED, "Red");
+	public Player playerYellow = new Player(MarkerType.YELLOW, "Yellow");
 	public AI botPlayer = new AI(MarkerType.YELLOW, "Easy");
 	private Player currentPlayer;
 	private JLabel text;

@@ -37,7 +37,6 @@ public class StartDialog extends JDialog implements MouseListener{
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
 		if(e.getSource().equals(human)) {
 			game.bot = false;
 		}
@@ -45,6 +44,7 @@ public class StartDialog extends JDialog implements MouseListener{
 			game.bot = true;
 				new LevelDialog(game); 
 		}
+		new PlayerNames(game);
 		dispose();
 		
 	}

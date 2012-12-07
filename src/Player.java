@@ -3,9 +3,11 @@ public class Player implements Cloneable {
 	
 	private MarkerType color;
 	public int moves=0;
+	public String name;
 	
-	public Player(MarkerType color) {
+	public Player(MarkerType color, String name) {
 		this.color = color;   
+		this.name = name;
 		}
 	
 	/**
