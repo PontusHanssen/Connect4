@@ -2,13 +2,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Scanner;
 import java.util.SortedMap;
+import java.util.TreeMap;
 import java.io.BufferedOutputStream;
 import java.io.File; 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;	
 import javax.swing.JLabel;
@@ -19,8 +19,9 @@ import javax.swing.JPanel;
 
 public class Toplist extends JDialog implements MouseListener {
 
-	private SortedMap<Integer, String> toplist;
-
+	private SortedMap<Integer, String> toplist = new TreeMap<Integer, String>();
+	public JLabel toplista;
+	
 	public Toplist	() {
 		setSize(300, 200);
 		setResizable(false);
@@ -36,9 +37,12 @@ public class Toplist extends JDialog implements MouseListener {
 		setVisible(false); 
 	}
 
-	private String print() {
+	public String print() {
 		String printList = new String();
 		int place = 1; 
+		if(toplist.isEmpty()){
+			return "No results";
+		}
 		for(int i : toplist.keySet()) {
 			printList.concat(place + ". " + toplist.get(i) + " : " + toplist.get(i) + "\n");  
 			place++; 
@@ -54,7 +58,7 @@ public class Toplist extends JDialog implements MouseListener {
 			BufferedOutputStream oStream = new BufferedOutputStream(new FileOutputStream(f1));
 			
 			for(int i : toplist.keySet()) {
-				outputString.concat(String.valueOf(i) + "|" + toplist.get(i) + "\n");  
+				outputString.concat(String.valueOf(i) + "#" + toplist.get(i) + "\n");  
 				}
 			
 			try {
@@ -77,14 +81,21 @@ public class Toplist extends JDialog implements MouseListener {
 		try {
 			Scanner scanner = new Scanner(new FileInputStream(f1));
 			while(scanner.hasNext()){
-				file.concat(scanner.nextLine() + '\n');
+				String next = scanner.next();
+				file += next + "\n";
 			}
+			file = file.substring(0, file.length()-1);
 		} catch (FileNotFoundException e) {
 			System.out.println(f1.getAbsolutePath() + ": Not found!");
 		}
+		if(file.length()<1) {
+			System.out.println("Filen är tom");
+			return;
+		}
+		System.out.println(file + " lol");
 		String[] rows=file.split("\n");
 		for(int i=0; i<rows.length;i++){
-			String[] nameScore = rows[i].split("|");
+			String[] nameScore = rows[i].split("#");
 			toplist.put(Integer.parseInt(nameScore[0]), nameScore[1]);
 		}
 		

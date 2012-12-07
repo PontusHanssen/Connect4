@@ -181,10 +181,7 @@ public class Game extends JFrame implements MouseListener {
 		try {
 			board.placeMove(pos, currentPlayer);;
 			if (currentPlayer.getColor() == board.checkWin()) {
-				Toplist toplist = new Toplist();
-				toplist.updateToplist(currentPlayer); 
 				new WinDialog(currentPlayer, this);
-				toplist.setVisible(true); 
 			}
 			if (currentPlayer == playerRed) {
 				currentPlayer = playerYellow;
@@ -211,6 +208,7 @@ public class Game extends JFrame implements MouseListener {
 			if (board.checkWin() == currentPlayer.getColor()) {
 				Toplist toplist = new Toplist(); 
 				toplist.updateToplist(currentPlayer);
+				toplist.toplista.setText(toplist.print());
 				new WinDialog(currentPlayer, this);
 				toplist.setVisible(true); 
 			}
