@@ -181,7 +181,10 @@ public class Game extends JFrame implements MouseListener {
 		try {
 			board.placeMove(pos, currentPlayer);;
 			if (currentPlayer.getColor() == board.checkWin()) {
+				Toplist toplist = new Toplist();
+				toplist.updateToplist(currentPlayer); 
 				new WinDialog(currentPlayer, this);
+				toplist.setVisible(true); 
 			}
 			if (currentPlayer == playerRed) {
 				currentPlayer = playerYellow;
@@ -206,7 +209,10 @@ public class Game extends JFrame implements MouseListener {
 		try {
 			board.placeMove(pos, currentPlayer);
 			if (board.checkWin() == currentPlayer.getColor()) {
+				Toplist toplist = new Toplist(); 
+				toplist.updateToplist(currentPlayer);
 				new WinDialog(currentPlayer, this);
+				toplist.setVisible(true); 
 			}
 			if (board.checkWin() == MarkerType.EMPTY) {
 				board.placeMove(
@@ -214,7 +220,10 @@ public class Game extends JFrame implements MouseListener {
 						botPlayer);
 			}
 			if (board.checkWin() == botPlayer.getColor()) {
+				Toplist toplist = new Toplist(); 
+				toplist.updateToplist(botPlayer); 
 				new WinDialog(botPlayer, this);
+				toplist.setVisible(true); 
 			}
 		} catch (NoSpaceLeftInColumnException e1) {
 
