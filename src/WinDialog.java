@@ -32,6 +32,9 @@ public class WinDialog extends JDialog implements MouseListener{
 		panel.add(exit);
 		add(panel);
 		setVisible(true);
+		Toplist toplist = new Toplist(player); 
+		toplist.invalidate(); 
+		toplist.repaint(); 
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.io.BufferedOutputStream;
@@ -22,36 +23,42 @@ public class Toplist extends JDialog implements MouseListener {
 	private SortedMap<Integer, String> toplist = new TreeMap<Integer, String>();
 	public JLabel toplista;
 	
-	public Toplist	() {
+	public Toplist (Player player) {
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		readToplist(); 
-		JLabel toplista = new JLabel(print()); 
+		updateToplist(player); 
+		toplista = new JLabel(print());
+		System.out.println(print());
 		JButton ok = new JButton("OK!");
 		ok.addMouseListener(this); 
 		JPanel panel = new JPanel(); 
 		panel.add(toplista);
 		panel.add(ok); 
 		add(panel); 
-		setVisible(false); 
+		setVisible(true); 
 	}
 
 	public String print() {
-		String printList = new String();
+		String printList = "<html><body><table style='color: #ccc; border: 1px solid #000'><tr><th>Plats</th><th>Namn</th><th>Drag</th></tr>";
 		int place = 1; 
 		if(toplist.isEmpty()){
 			return "No results";
 		}
 		for(int i : toplist.keySet()) {
-			printList.concat(place + ". " + toplist.get(i) + " : " + toplist.get(i) + "\n");  
+			printList += "<tr><td>" + place + ".</td><td>" + toplist.get(i) + "</td><td>" + i + "</td></tr>";  
 			place++; 
+			if(place > 5){
+				break;
+			}
 		}
+		printList += "</body></html>";
 		return printList; 
 		
 	}
 	
-	public void saveToplist(Player winner) {
+	public void saveToplist() {
 		File f1 = new File(System.getProperty("user.dir") + "/src/toplist.txt");
 		String outputString = new String(); 
 		try {
@@ -92,14 +99,14 @@ public class Toplist extends JDialog implements MouseListener {
 			System.out.println("Filen är tom");
 			return;
 		}
-		System.out.println(file + " lol");
 		String[] rows=file.split("\n");
 		for(int i=0; i<rows.length;i++){
 			String[] nameScore = rows[i].split("#");
 			toplist.put(Integer.parseInt(nameScore[0]), nameScore[1]);
 		}
 		
-
+		invalidate();
+		repaint(); 
 		
 	}
 
@@ -109,13 +116,16 @@ public class Toplist extends JDialog implements MouseListener {
 		} else {
 			if (toplist.lastKey() > winner.moves) {
 				toplist.put(winner.moves, winner.name);
-				toplist.remove(toplist.lastKey());
 			}
 		}
+		invalidate();
+		repaint(); 
 	}
+	
 
 	@Override
 	public void mouseClicked(MouseEvent e) { 
+		saveToplist();
 		dispose(); 
 	}
 
