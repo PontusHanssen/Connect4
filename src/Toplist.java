@@ -30,7 +30,6 @@ public class Toplist extends JDialog implements MouseListener {
 		readToplist(); 
 		updateToplist(player); 
 		toplista = new JLabel(print());
-		System.out.println(print());
 		JButton ok = new JButton("OK!");
 		ok.addMouseListener(this); 
 		JPanel panel = new JPanel(); 
@@ -65,9 +64,9 @@ public class Toplist extends JDialog implements MouseListener {
 			BufferedOutputStream oStream = new BufferedOutputStream(new FileOutputStream(f1));
 			
 			for(int i : toplist.keySet()) {
-				outputString.concat(String.valueOf(i) + "#" + toplist.get(i) + "\n");  
+				outputString += (String.valueOf(i) + "#" + toplist.get(i) + "\n");  
 				}
-			
+			System.out.println(outputString);
 			try {
 				oStream.write(outputString.getBytes());
 				oStream.close(); 
@@ -111,13 +110,8 @@ public class Toplist extends JDialog implements MouseListener {
 	}
 
 	public void updateToplist(Player winner) {
-		if (toplist.isEmpty()) {
 			toplist.put(winner.moves, winner.name);
-		} else {
-			if (toplist.lastKey() > winner.moves) {
-				toplist.put(winner.moves, winner.name);
-			}
-		}
+		
 		invalidate();
 		repaint(); 
 	}

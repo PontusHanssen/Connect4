@@ -1,5 +1,12 @@
 1#Staben
-4#Pontus
-45#Tova
-44#Magnus
-66#Gunnar
+2#Bot
+4#Red
+5#Red
+6#Red
+7#Red
+8#Red
+9#Red
+10#Bot
+11#Bot
+12#Tova
+13#Red

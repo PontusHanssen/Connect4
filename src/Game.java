@@ -183,6 +183,7 @@ public class Game extends JFrame implements MouseListener {
 			if (currentPlayer.getColor() == board.checkWin()) {
 				new WinDialog(currentPlayer, this);
 			}
+			
 			if (currentPlayer == playerRed) {
 				currentPlayer = playerYellow;
 
@@ -191,7 +192,9 @@ public class Game extends JFrame implements MouseListener {
 
 			}
 		} catch (NoSpaceLeftInColumnException e1) {
-
+			if(board.boardFull) {
+				new WinDialog(); 
+			}
 		}
 
 	}
@@ -217,7 +220,9 @@ public class Game extends JFrame implements MouseListener {
 				new WinDialog(botPlayer, this);
 			}
 		} catch (NoSpaceLeftInColumnException e1) {
-
+			if(board.boardFull) {
+				new WinDialog(); 
+			}
 		}
 
 	}
@@ -227,6 +232,7 @@ public class Game extends JFrame implements MouseListener {
 	 */
 	public void resetGame() {
 		board.emptyBoard();
+		currentPlayer = playerRed;
 		playerRed.moves = 0;
 		playerYellow.moves = 0;
 		botPlayer.moves = 0;

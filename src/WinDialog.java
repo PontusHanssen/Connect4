@@ -20,7 +20,7 @@ public class WinDialog extends JDialog implements MouseListener{
 		setResizable(true);
 		setLocationRelativeTo(null);
 	
-		text = new JLabel("Player " + player.getColor() + " won after " + player.moves + " moves!");
+		text = new JLabel("Player " + player.name + " won after " + player.moves + " moves!");
 		newGame = new JButton("New game");
 		exit = new JButton("Exit game");
 		exit.addMouseListener(this);
@@ -35,6 +35,25 @@ public class WinDialog extends JDialog implements MouseListener{
 		Toplist toplist = new Toplist(player); 
 		toplist.invalidate(); 
 		toplist.repaint(); 
+	}
+	
+	public WinDialog() {
+		setSize(250, 100);
+		setResizable(true);
+		setLocationRelativeTo(null);
+	
+		text = new JLabel("Out of space :( The game was a tie");
+		newGame = new JButton("New game");
+		exit = new JButton("Exit game");
+		exit.addMouseListener(this);
+		newGame.addMouseListener(this);
+		panel = new JPanel();
+		
+		panel.add(text);
+		panel.add(newGame);
+		panel.add(exit);
+		add(panel);
+		setVisible(true);
 	}
 	
 	/**

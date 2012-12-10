@@ -32,7 +32,7 @@ public class AI extends Player {
 	 *            The largest position number on the board.
 	 * @return A position to place the next move.
 	 */
-	public int getMoveMedium(Board board, int largestPos, boolean fromHard) {
+	public int getMoveMedium(Board board, int largestPos) {
 
 		int falseMoves = 0;
 		for (int i = 0; i < largestPos; i++) {
@@ -54,48 +54,32 @@ public class AI extends Player {
 
 		}
 		moves -= falseMoves;
-		if (fromHard) {
-			return -1;
-		} else {
-			return getMoveEasy(largestPos);
-		}
+;
+		return getMoveEasy(largestPos);
 	}
 
 	/**
 	 * Position calculated by our supermegaawesome algorithm!!!11
 	 * @param board
 	 * @param largestPos
-	 * @return
+	 * @retur
 	 */
 	public int getMoveHard(Board board, int largestPos) {
-		if (getMoveMedium(board, largestPos, true) > 0) {
-			return getMoveMedium(board, largestPos, true);
-		} else {
-
-			for (int pos = 0; pos < largestPos; pos++) {
-				if (board.getMarkerType(pos).equals(MarkerType.EMPTY)) {
-					// right
-					if (pos % board.cols < board.cols - 1) {
-
-						if (board.getMarkerType(pos + 1).equals(getColor())) {
-							return pos;
-						}
-					}
-
-					// down
-					if (pos / (board.cols - 1) > 0) {
-						if (board.getMarkerType(pos - (board.cols - 1)).equals(
-								getColor())) {
-							return pos;
-						}
-
-					}
-
+		for (int i = 0; i < largestPos; i++) {
+			Board workingBoard = board.clone();
+			try {
+				workingBoard.placeMove(i, new Player(MarkerType.RED, "Hugo"));
+				if (workingBoard.checkWin() == MarkerType.RED) {
+					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
+					return i;
+				} else {
+					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
 				}
+			} catch (NoSpaceLeftInColumnException e) {
 			}
-			return getMoveEasy(largestPos);
-		}
-
+		}		
+		
+		return getMoveMedium(board, largestPos);
 	}
 
 	/**
@@ -117,7 +101,7 @@ public int getMove(Board board, int largestPos){
 		return getMoveEasy(largestPos);
 	}
 	else if(level.equals("Medium")) {
-		return getMoveMedium(board, largestPos, true);
+		return getMoveMedium(board, largestPos);
 	}
 	else{
 		return getMoveHard(board, largestPos);
