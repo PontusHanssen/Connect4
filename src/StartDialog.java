@@ -12,6 +12,10 @@ public class StartDialog extends JDialog implements MouseListener{
 	private JButton human, bot;
 	private Game game;
 	
+	/**
+	 * Creates a start dialog where type of game is chosen.
+	 * @param game The current game.
+	 */
 	public StartDialog(Game game){
 		setSize(250, 100);
 		setResizable(true);

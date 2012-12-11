@@ -13,6 +13,12 @@ public class WinDialog extends JDialog implements MouseListener{
 	private JLabel text;
 	private JButton newGame, exit;
 	private Game game;
+	
+	/**
+	 * Creates a Dialog when there is a winner.
+	 * @param player Winner of the game.
+	 * @param game The current game.
+	 */
 	public WinDialog(Player player, Game game) {
 		this.game = game;
 		
@@ -37,6 +43,9 @@ public class WinDialog extends JDialog implements MouseListener{
 		toplist.repaint(); 
 	}
 	
+	/**
+	 * Creates a Dialog when the game is a tie.
+	 */
 	public WinDialog() {
 		setSize(250, 100);
 		setResizable(true);

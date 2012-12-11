@@ -5,6 +5,11 @@ public class Player implements Cloneable {
 	public int moves=0;
 	public String name;
 	
+	/**
+	 * Creates a new player.
+	 * @param color
+	 * @param name
+	 */
 	public Player(MarkerType color, String name) {
 		this.color = color;   
 		this.name = name;

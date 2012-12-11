@@ -13,6 +13,11 @@ public class Marker extends JPanel {
 	private int pos;
 	JLabel poslabel;
 
+	/**
+	 * Creates a new marker.
+	 * @param color Color of the marker.
+	 * @param pos Position of the marker.
+	 */
 	public Marker(MarkerType color, int pos) {
 		this.pos = pos;
 		switch (color) {
@@ -47,6 +52,10 @@ public class Marker extends JPanel {
 		}
 	}
 
+	/**
+	 * Paints the markers on the background.
+	 * 
+	 */
 	@Override
 	public void paint(Graphics g) {
 		// TODO Auto-generated method stub

@@ -9,22 +9,25 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 @SuppressWarnings("serial")
-public class LevelDialog extends JDialog implements MouseListener{
+public class LevelDialog extends JDialog implements MouseListener {
 	private JPanel panel;
 	private JLabel levelChoice;
-	private JButton easy, medium, hard; 
-	private Game game; 
-	
+	private JButton easy, medium, hard;
+	private Game game;
+
+	/**
+	 * Creates a dialog where player can chose level.
+	 * 
+	 * @param game
+	 */
 	public LevelDialog(Game game) {
-		this.game = game; 
-		
+		this.game = game;
+
 		setSize(300, 200);
 		setResizable(true);
 		setLocationRelativeTo(null);
-	
-		
+
 		levelChoice = new JLabel("What level do you want to play?");
 		easy = new JButton("Easy");
 		easy.addMouseListener(this);
@@ -33,10 +36,9 @@ public class LevelDialog extends JDialog implements MouseListener{
 		hard = new JButton("Hard");
 		hard.addMouseListener(this);
 		panel = new JPanel(new GridBagLayout());
-	
+
 		GridBagConstraints gb = new GridBagConstraints();
 
-		
 		levelChoice.setBackground(Board.getColor());
 		gb.weighty = 0.0;
 		gb.weightx = 1.0;
@@ -51,66 +53,67 @@ public class LevelDialog extends JDialog implements MouseListener{
 		gb.gridy = 1;
 		gb.weighty = 1.0;
 		gb.weightx = 1.0;
-		gb.fill = GridBagConstraints.HORIZONTAL; 
-		panel.add(easy,gb);
-		
+		gb.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(easy, gb);
+
 		gb.gridx = 0;
 		gb.gridy = 2;
 		gb.weighty = 1.0;
 		gb.weightx = 1.0;
 		gb.fill = GridBagConstraints.HORIZONTAL;
-		panel.add(medium,gb);
-		
+		panel.add(medium, gb);
+
 		gb.gridx = 0;
 		gb.gridy = 3;
 		gb.weighty = 1.0;
 		gb.weightx = 1.0;
 		gb.fill = GridBagConstraints.HORIZONTAL;
-		panel.add(hard,gb);
+		panel.add(hard, gb);
 
 		add(panel);
 		setVisible(true);
-		
+
 	}
-	
+
 	/**
 	 * Performs action when a button is clicked.
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-			if(e.getSource().equals(easy)){
-			game.botPlayer.setLevel("Easy"); 
+		if (e.getSource().equals(easy)) {
+			game.botPlayer.setLevel("Easy");
 			dispose();
-			}
-			else if(e.getSource().equals(medium)) {
-			game.botPlayer.setLevel("Medium"); 
-			dispose();	
-			}
-			else {
-			game.botPlayer.setLevel("Hard"); 
+		} else if (e.getSource().equals(medium)) {
+			game.botPlayer.setLevel("Medium");
 			dispose();
-			}
-		
-		
+		} else {
+			game.botPlayer.setLevel("Hard");
+			dispose();
+		}
+
 	}
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

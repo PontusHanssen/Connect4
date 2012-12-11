@@ -2,8 +2,13 @@ import java.util.Date;
 import java.util.Random;
 
 public class AI extends Player {
-	String level;
+	private String level;
 
+	/**
+	 * Creates new bot player.
+	 * @param color Markercolor of bot player.
+	 * @param level Level for bot player.
+	 */
 	public AI(MarkerType color, String level) {
 		super(color, "Bot");
 		this.level = level;
@@ -33,16 +38,12 @@ public class AI extends Player {
 	 * @return A position to place the next move.
 	 */
 	public int getMoveMedium(Board board, int largestPos) {
-
-		int falseMoves = 0;
 		for (int i = 0; i < largestPos; i++) {
 			Board workingBoard = board.clone();
 			try {
-				workingBoard.placeMove(i, this);
-				falseMoves++;
+				workingBoard.placeMove(i, new Player(this.getColor(), "Fake player"));
 				if (workingBoard.checkWin() == this.getColor()) {
 					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
-					moves -= falseMoves;
 					return i;
 
 				} else {
@@ -53,8 +54,7 @@ public class AI extends Player {
 			}
 
 		}
-		moves -= falseMoves;
-;
+
 		return getMoveEasy(largestPos);
 	}
 
@@ -68,7 +68,7 @@ public class AI extends Player {
 		for (int i = 0; i < largestPos; i++) {
 			Board workingBoard = board.clone();
 			try {
-				workingBoard.placeMove(i, new Player(MarkerType.RED, "Hugo"));
+				workingBoard.placeMove(i, new Player(MarkerType.RED, "Fake player"));
 				if (workingBoard.checkWin() == MarkerType.RED) {
 					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
 					return i;

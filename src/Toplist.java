@@ -23,6 +23,10 @@ public class Toplist extends JDialog implements MouseListener {
 	private SortedMap<Integer, String> toplist = new TreeMap<Integer, String>();
 	public JLabel toplista;
 	
+	/**
+	 * Creates a new toplist.
+	 * @param player Winner of current game.
+	 */
 	public Toplist (Player player) {
 		setSize(300, 200);
 		setResizable(false);
@@ -39,6 +43,10 @@ public class Toplist extends JDialog implements MouseListener {
 		setVisible(true); 
 	}
 
+	/**
+	 * Puts together a string to be printed.
+	 * @return String - printable toplist with the right format
+	 */
 	public String print() {
 		String printList = "<html><body><table style='color: #ccc; border: 1px solid #000'><tr><th>Plats</th><th>Namn</th><th>Drag</th></tr>";
 		int place = 1; 
@@ -56,7 +64,9 @@ public class Toplist extends JDialog implements MouseListener {
 		return printList; 
 		
 	}
-	
+	/**
+	 * Saves the toplist to a file.
+	 */
 	public void saveToplist() {
 		File f1 = new File(System.getProperty("user.dir") + "/src/toplist.txt");
 		String outputString = new String(); 
@@ -81,6 +91,9 @@ public class Toplist extends JDialog implements MouseListener {
 
 	}
 
+	/**
+	 * Reads the toplist from a file.
+	 */
 	public void readToplist() {
 		File f1 = new File(System.getProperty("user.dir")+ "/src/toplist.txt");
 		String file = new String();
@@ -109,6 +122,10 @@ public class Toplist extends JDialog implements MouseListener {
 		
 	}
 
+	/**
+	 * Updates the toplist when a player beats the score.
+	 * @param winner Winner of current game.
+	 */
 	public void updateToplist(Player winner) {
 			toplist.put(winner.moves, winner.name);
 		
@@ -116,7 +133,9 @@ public class Toplist extends JDialog implements MouseListener {
 		repaint(); 
 	}
 	
-
+/**
+ * Actions to be performed when mouse is clicked.
+ */
 	@Override
 	public void mouseClicked(MouseEvent e) { 
 		saveToplist();

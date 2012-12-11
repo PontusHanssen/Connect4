@@ -15,7 +15,10 @@ public class PlayerNames extends JDialog implements MouseListener {
 	private JButton button;
 	private Game game;
 
-
+/**
+ * Creates a dialog to enter player names.
+ * @param game Current game.
+ */
 	public PlayerNames(Game game) {
 
 		setSize(250, 100);
@@ -45,6 +48,9 @@ public class PlayerNames extends JDialog implements MouseListener {
 		setVisible(true);
 	}
 
+	/**
+	 * Actions to be performed when mouse is clicked.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		game.playerRed.name = red.getText();
