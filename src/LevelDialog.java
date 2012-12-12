@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class LevelDialog extends JDialog implements MouseListener {
 	private JPanel panel;
 	private JLabel levelChoice;
-	private JButton easy, medium, hard;
+	private JButton easy, hard;
 	private Game game;
 
 	/**
@@ -31,8 +31,6 @@ public class LevelDialog extends JDialog implements MouseListener {
 		levelChoice = new JLabel("What level do you want to play?");
 		easy = new JButton("Easy");
 		easy.addMouseListener(this);
-		medium = new JButton("Medium");
-		medium.addMouseListener(this);
 		hard = new JButton("Hard");
 		hard.addMouseListener(this);
 		panel = new JPanel(new GridBagLayout());
@@ -56,12 +54,7 @@ public class LevelDialog extends JDialog implements MouseListener {
 		gb.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(easy, gb);
 
-		gb.gridx = 0;
-		gb.gridy = 2;
-		gb.weighty = 1.0;
-		gb.weightx = 1.0;
-		gb.fill = GridBagConstraints.HORIZONTAL;
-		panel.add(medium, gb);
+
 
 		gb.gridx = 0;
 		gb.gridy = 3;
@@ -83,10 +76,7 @@ public class LevelDialog extends JDialog implements MouseListener {
 		if (e.getSource().equals(easy)) {
 			game.botPlayer.setLevel("Easy");
 			dispose();
-		} else if (e.getSource().equals(medium)) {
-			game.botPlayer.setLevel("Medium");
-			dispose();
-		} else {
+		}  else {
 			game.botPlayer.setLevel("Hard");
 			dispose();
 		}

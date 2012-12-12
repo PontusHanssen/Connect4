@@ -21,42 +21,25 @@ public class AI extends Player {
 	 *            The largest position number on the board.
 	 * @return A position to place the next move.
 	 */
-	public int getMoveEasy(int largestPos) {
-		Random randomPos = new Random(new Date().getTime());
-		int pos = randomPos.nextInt(largestPos);
-		return pos;
-	}
-
-	/**
-	 * AI that checks if it is possible to win in this move. Otherwise places a
-	 * marker in random position.
-	 * 
-	 * @param board
-	 *            Current game board.
-	 * @param largestPos
-	 *            The largest position number on the board.
-	 * @return A position to place the next move.
-	 */
-	public int getMoveMedium(Board board, int largestPos) {
-		for (int i = 0; i < largestPos; i++) {
-			Board workingBoard = board.clone();
-			try {
-				workingBoard.placeMove(i, new Player(this.getColor(), "Fake player"));
-				if (workingBoard.checkWin() == this.getColor()) {
-					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
-					return i;
-
-				} else {
-					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
-				}
-			} catch (NoSpaceLeftInColumnException e) {
-
-			}
-
+	public int getMoveEasy(Board board, Player opponent) {
+		if(canWin(board, this) > -1) {
+			return canWin(board, this);
+		}
+		else if(canWin(board, opponent) > -1) {
+			return canWin(board, opponent);
+		}
+		else if(isMiddleEmpty(board, this) > -1) {
+			return isMiddleEmpty(board, this);
+		}
+		else if(nextTo(board, this) > -1) {
+			return nextTo(board, this);
+		}
+		else {
+			return random(board);
+		}
 		}
 
-		return getMoveEasy(largestPos);
-	}
+
 
 	/**
 	 * Position calculated by our supermegaawesome algorithm!!!11
@@ -85,7 +68,7 @@ public class AI extends Player {
 			return nextTo(board, this);
 		}
 		else {
-			return getMoveEasy(board.cols*board.rows-1);
+			return random(board);
 		}
 	}
 
@@ -95,6 +78,12 @@ public class AI extends Player {
 	 */
 	public void setLevel(String level) {
 		this.level = level;
+	}
+	
+	private int random(Board board) {
+		Random randomPos = new Random(new Date().getTime());
+		int pos = randomPos.nextInt(board.rows*board.cols-1);
+		return pos;
 	}
 
 	private int twoStepsAhead(Board board, Player currentPlayer) {
@@ -333,10 +322,7 @@ int largestPos = board.cols*board.rows-1;
  */
 public int getMove(Board board, int largestPos){
 	if(level.equals("Easy")){
-		return getMoveEasy(largestPos);
-	}
-	else if(level.equals("Medium")) {
-		return getMoveMedium(board, largestPos);
+		return getMoveEasy(board, new Player(MarkerType.RED, "opp"));
 	}
 	else{
 		return getMoveHard(board, new Player(MarkerType.RED, "opp"));
