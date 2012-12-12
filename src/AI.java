@@ -242,6 +242,7 @@ int largestPos = board.cols*board.rows-1;
 		for (int i = 0; i < largestPos; i++) {
 			if(board.getMarkerType(i) == player.getColor() 
 					&& i % board.cols < (board.cols - 1)
+					&& i/board.cols <= board.rows-2
 					&& board.getMarkerType(i+1) == MarkerType.EMPTY) {
 				try {
 					board.placeMove((i+(board.cols+1)), player);
@@ -279,6 +280,7 @@ int largestPos = board.cols*board.rows-1;
 				if(board.getMarkerType(i) == player.getColor() 
 						&& i % board.cols > 0 
 	                    && i % board.cols < (board.cols - 1)
+	                    && i/board.cols <= board.rows-2
 						&& board.getMarkerType(i+(board.cols-1)) == MarkerType.EMPTY) {
 					try {
 						board.placeMove((i+(board.cols-1)), player);
