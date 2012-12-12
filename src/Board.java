@@ -5,7 +5,8 @@ public class Board implements Cloneable {
 	private final static Color color = Color.blue;
 	private MarkerType[][] board;
 	public int cols, rows;
-	public boolean boardFull = true; 
+	public boolean boardFull = true;
+	public boolean horizontalWin = false;
 
 	/**
 	 * Creates new game board.
@@ -58,8 +59,8 @@ public class Board implements Cloneable {
 					board[i][col] = player.getColor();
 					player.moves++;
 					return;
-				}
 
+			}
 			}
 		} else {
 			throw new NoSpaceLeftInColumnException();
@@ -67,19 +68,24 @@ public class Board implements Cloneable {
 
 	}
 	
+	
 	/**
 	 * Checks if there is a winner.
 	 * @return MarkerType of winner.
 	 */
 	public MarkerType checkWin() {
-		boardFull = true; 
+		boardFull = true;
+		horizontalWin = false;
 		for(int c=0; c < cols; c++) {
 			if(board[rows-1][c] == MarkerType.EMPTY) {
 				boardFull = false; 
 			}
 		}
-		// horizontal
+		
+	 
 		MarkerType win = MarkerType.EMPTY;
+
+	// horizontal
 		for (int r = 0; r < rows; r++) {
 			for (int c = 0; c < cols - 3; c++) {
 
@@ -87,7 +93,7 @@ public class Board implements Cloneable {
 						&& board[r][c] == board[r][c + 2]
 						&& board[r][c] == board[r][c + 3]
 						&& board[r][c] != MarkerType.EMPTY) {
-
+					horizontalWin = true;
 					win = board[r][c];
 				}
 			}
@@ -116,6 +122,7 @@ public class Board implements Cloneable {
 						&& board[r][c] == board[r + 3][c + 3]
 						&& board[r][c] != MarkerType.EMPTY) {
 					win = board[r][c];
+					horizontalWin = true;
 				}
 			}
 		}
@@ -127,14 +134,16 @@ public class Board implements Cloneable {
 						&& board[r][c] == board[r + 2][c - 2]
 						&& board[r][c] == board[r + 3][c - 3]
 						&& board[r][c] != MarkerType.EMPTY) {
+					horizontalWin = true;
 					win = board[r][c];
 				}
 			}
-		}
+		} 
 
 		return win;
 
 	}
+	
 
 	/**
 	 * 

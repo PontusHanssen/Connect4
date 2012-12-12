@@ -76,7 +76,6 @@ public class Toplist extends JDialog implements MouseListener {
 			for(int i : toplist.keySet()) {
 				outputString += (String.valueOf(i) + "#" + toplist.get(i) + "\n");  
 				}
-			System.out.println(outputString);
 			try {
 				oStream.write(outputString.getBytes());
 				oStream.close(); 
