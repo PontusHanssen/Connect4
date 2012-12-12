@@ -14,13 +14,12 @@ public class AI extends Player {
 		this.level = level;
 	}
 
-	/**
-	 * AI that generates a random number to place a marker in.
-	 * 
-	 * @param largestPos
-	 *            The largest position number on the board.
-	 * @return A position to place the next move.
-	 */
+/**
+ * Returns position for the easy bot
+ * @param board
+ * @param opponent
+ * @return
+ */
 	public int getMoveEasy(Board board, Player opponent) {
 		if(canWin(board, this) > -1) {
 			return canWin(board, this);
@@ -44,8 +43,8 @@ public class AI extends Player {
 	/**
 	 * Position calculated by our supermegaawesome algorithm!!!11
 	 * @param board
-	 * @param largestPos
-	 * @retur
+	 * @param opponent
+	 * @return
 	 */
 	public int getMoveHard(Board board, Player opponent) {
 		if(canWin(board, this) > -1) {
