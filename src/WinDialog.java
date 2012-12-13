@@ -1,3 +1,5 @@
+
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -6,7 +8,11 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
+/**
+ * Creates a Dialog-window when game is over to show the winner and give the option to start a new game or exit.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
 @SuppressWarnings("serial")
 public class WinDialog extends JDialog implements MouseListener{
 	private JPanel panel;
@@ -26,7 +32,7 @@ public class WinDialog extends JDialog implements MouseListener{
 		setResizable(true);
 		setLocationRelativeTo(null);
 	
-		text = new JLabel("Player " + player.name + " won after " + player.moves + " moves!");
+		text = new JLabel("Player " + player.getName() + " won after " + player.getMoves() + " moves!");
 		newGame = new JButton("New game");
 		exit = new JButton("Exit game");
 		exit.addMouseListener(this);

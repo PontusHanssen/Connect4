@@ -4,11 +4,12 @@
 6#Bot
 7#Red
 8#Bot
-9#Red
+9#Bot
 10#Bot
-11#Bot
+11#Red
 12#Bot
 13#Bot
 15#Bot
 17#Bot
+19#Bot
 21#Bot

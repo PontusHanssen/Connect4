@@ -3,7 +3,6 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BorderFactory;
@@ -12,17 +11,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import sun.font.EAttribute;
-
+/**
+ * Creates and runs a game of Connect 4. Contains the graphic interface.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
 @SuppressWarnings("serial")
 public class Game extends JFrame implements MouseListener {
-	public static Board board;
+	private static Board board;
 	private JPanel gamePanel, statsPanel, containerPanel;
-	public boolean bot = false;
-	private int rows, cols;
+	private int rows, cols;	
+	private boolean bot = false;
+	
 	public Player playerRed = new Player(MarkerType.RED, "Red");
 	public Player playerYellow = new Player(MarkerType.YELLOW, "Yellow");
 	public AI botPlayer = new AI(MarkerType.YELLOW, "Easy");
+	
 	private Player currentPlayer;
 	private JLabel text;
 
@@ -115,9 +119,22 @@ public class Game extends JFrame implements MouseListener {
 		});
 
 	}
-
+/**
+ * Returns the value of the variable bot.
+ * @return True is bot game, else false.
+ */
+	public boolean isBotGame() {
+		return this.bot; 
+	}
 	/**
-	 * 
+	 * Set the value of the variable bot.
+	 * @param isBotGame
+	 */
+	public void setBot(boolean isBotGame) {
+		this.bot = isBotGame;
+	}
+	
+	/**
 	 * @param pos
 	 *            Position on board.
 	 * @return Returns the MarkerType currently occupying the position.
@@ -192,7 +209,7 @@ public class Game extends JFrame implements MouseListener {
 
 			}
 		} catch (NoSpaceLeftInColumnException e1) {
-			if(board.boardFull) {
+			if(board.isBoardFull()) {
 				new WinDialog(); 
 			}
 		}
@@ -220,7 +237,7 @@ public class Game extends JFrame implements MouseListener {
 				new WinDialog(botPlayer, this);
 			}
 		} catch (NoSpaceLeftInColumnException e1) {
-			if(board.boardFull) {
+			if(board.isBoardFull()) {
 				new WinDialog(); 
 			}
 		}
@@ -233,9 +250,9 @@ public class Game extends JFrame implements MouseListener {
 	public void resetGame() {
 		board.emptyBoard();
 		currentPlayer = playerRed;
-		playerRed.moves = 0;
-		playerYellow.moves = 0;
-		botPlayer.moves = 0;
+		playerRed.resetMoves(); 
+		playerYellow.resetMoves();
+		botPlayer.resetMoves();
 		text.setText("Red player: 0 Yellow player: 0");
 		repaint();
 		new StartDialog(this);

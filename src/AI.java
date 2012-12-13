@@ -1,6 +1,11 @@
 import java.util.Date;
 import java.util.Random;
 
+/**
+ * Creates a bot-player and calculates positions for the bot-player's moves.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
 public class AI extends Player {
 	private String level;
 
@@ -27,8 +32,8 @@ public class AI extends Player {
 		else if(canWin(board, opponent) > -1) {
 			return canWin(board, opponent);
 		}
-		else if(isMiddleEmpty(board, this) > -1) {
-			return isMiddleEmpty(board, this);
+		else if(getMiddlePosition(board, this) > -1) {
+			return getMiddlePosition(board, this);
 		}
 		else if(nextTo(board, this) > -1) {
 			return nextTo(board, this);
@@ -60,8 +65,8 @@ public class AI extends Player {
 		else if(twoStepsAhead(board, opponent) > -1) {
 			return twoStepsAhead(board, opponent);
 		}
-		else if(isMiddleEmpty(board, this) > -1) {
-			return isMiddleEmpty(board, this);
+		else if(getMiddlePosition(board, this) > -1) {
+			return getMiddlePosition(board, this);
 		}
 		else if(nextTo(board, this) > -1) {
 			return nextTo(board, this);
@@ -81,13 +86,13 @@ public class AI extends Player {
 	
 	private int random(Board board) {
 		Random randomPos = new Random(new Date().getTime());
-		int pos = randomPos.nextInt(board.rows*board.cols-1);
+		int pos = randomPos.nextInt(board.getRows()*board.getCols()-1);
 		return pos;
 	}
 
 	private int twoStepsAhead(Board board, Player currentPlayer) {
 		Player player = new Player(currentPlayer.getColor(), "Fake Player");
-		int largestPos = board.cols * board.rows -1;
+		int largestPos = board.getCols() * board.getRows() -1;
 		for(int i=0;i < largestPos; i++){
 			Board firstBoard = board.clone();
 			try{
@@ -96,12 +101,12 @@ public class AI extends Player {
 					Board secoundBoard = firstBoard.clone();
 					secoundBoard.placeMove(k, player);
 					if(secoundBoard.checkWin() == player.getColor()) {
-						if(firstBoard.horizontalWin){
+						if(firstBoard.isHorizontalorDiagonalWin()){
 							return -1;
 						}
 						firstBoard.setMarkerPos(i, MarkerType.EMPTY);
 						firstBoard.setMarkerPos(k, MarkerType.EMPTY);
-						if(firstBoard.horizontalWin){
+						if(firstBoard.isHorizontalorDiagonalWin()){
 							return -1;
 						}
 						else {
@@ -122,7 +127,7 @@ public class AI extends Player {
 
 	private int canWin(Board board, Player currentPlayer) {
 		Player player = new Player(currentPlayer.getColor(), "Fake Player");
-		int largestPos = board.cols * board.rows -1;
+		int largestPos = board.getCols() * board.getRows() -1;
 		for(int i=0;i<largestPos;i++) {
 			Board workingBoard = board.clone();
 			try {
@@ -141,9 +146,8 @@ public class AI extends Player {
 		return -1;
 	}
 	
-	private int isMiddleEmpty(Board board, Player currentPlayer) {
-		Player player = new Player(currentPlayer.getColor(), "Fake Player");
-		int middle = board.cols/2;
+	private int getMiddlePosition(Board board, Player currentPlayer) {
+		int middle = board.getCols()/2;
 		if(board.getMarkerType(middle) == MarkerType.EMPTY) {
 			return middle;
 		}
@@ -153,13 +157,13 @@ public class AI extends Player {
 	}
 	
 	private int nextTo(Board board, Player currentPlayer) {
-int largestPos = board.cols*board.rows-1; 
+int largestPos = board.getCols()*board.getRows()-1; 
 		Player player = new Player(currentPlayer.getColor(), "Fake Player");
 		
 		//horizontal to the right
 		for (int i = 0; i < largestPos; i++) {
 			if(board.getMarkerType(i) == player.getColor() 
-					&& i % board.cols < (board.cols - 1)
+					&& i % board.getCols() < (board.getCols() - 1)
 					&& board.getMarkerType(i+1) == MarkerType.EMPTY) {
 				try {
 					board.placeMove((i+1), player);
@@ -174,7 +178,7 @@ int largestPos = board.cols*board.rows-1;
 						board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 						hit = true; 
 					}
-					testPosition = testPosition-board.cols; 
+					testPosition = testPosition-board.getCols(); 
 					} 
 					return (i+1); 
 				}
@@ -186,15 +190,15 @@ int largestPos = board.cols*board.rows-1;
 						board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 						hit = true; 
 					}
-					testPosition = testPosition-board.cols; 
+					testPosition = testPosition-board.getCols(); 
 					} 
 				}
 				}
 				
 			//horizontal to the left
 		else if (board.getMarkerType(i) == player.getColor() 
-					&& i % board.cols > 0 
-                    && i % board.cols < (board.cols - 1)
+					&& i % board.getCols() > 0 
+                    && i % board.getCols() < (board.getCols() - 1)
 					&& board.getMarkerType(i-1) == MarkerType.EMPTY) {
 			try {
 				board.placeMove((i-1), player);
@@ -209,7 +213,7 @@ int largestPos = board.cols*board.rows-1;
 					board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 					hit = true; 
 				}
-				testPosition = testPosition-board.cols; 
+				testPosition = testPosition-board.getCols(); 
 				}
 				return (i-1);
 			}
@@ -221,7 +225,7 @@ int largestPos = board.cols*board.rows-1;
 					board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 					hit = true; 
 				}
-				testPosition = testPosition-board.cols; 
+				testPosition = testPosition-board.getCols(); 
 				}
 			}
 			 
@@ -231,9 +235,9 @@ int largestPos = board.cols*board.rows-1;
 		// vertical
 		for (int i = 0; i < largestPos; i++) {
 			if(board.getMarkerType(i) == player.getColor()
-					&& i / board.cols < (board.rows - 2)
-					&& board.getMarkerType(i + board.cols) == MarkerType.EMPTY) {
-				return (i + board.cols); 
+					&& i / board.getCols() < (board.getRows() - 2)
+					&& board.getMarkerType(i + board.getCols()) == MarkerType.EMPTY) {
+				return (i + board.getCols()); 
 			}
 		}	
 		
@@ -241,35 +245,35 @@ int largestPos = board.cols*board.rows-1;
 		//diagonal NE
 		for (int i = 0; i < largestPos; i++) {
 			if(board.getMarkerType(i) == player.getColor() 
-					&& i % board.cols < (board.cols - 1)
-					&& i/board.cols <= board.rows-2
+					&& i % board.getCols() < (board.getCols() - 1)
+					&& i/board.getCols() <= board.getRows()-2
 					&& board.getMarkerType(i+1) == MarkerType.EMPTY) {
 				try {
-					board.placeMove((i+(board.cols+1)), player);
+					board.placeMove((i+(board.getCols()+1)), player);
 				} catch (NoSpaceLeftInColumnException e) {
 					
 				} 
-				if(board.getMarkerType(i+(board.cols+1))==board.getMarkerType(i)) {
+				if(board.getMarkerType(i+(board.getCols()+1))==board.getMarkerType(i)) {
 					boolean hit = false; 
-					int testPosition = (i+(board.cols+1)); 
+					int testPosition = (i+(board.getCols()+1)); 
 					while(!hit) {
 					if(board.getMarkerType(testPosition)==player.getColor()) {
 						board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 						hit = true; 
 					}
-					testPosition = testPosition-board.cols; 
+					testPosition = testPosition-board.getCols(); 
 					} 
-					return (i+(board.cols+1)); 
+					return (i+(board.getCols()+1)); 
 				}
 				else {
 					boolean hit = false; 
-					int testPosition = (i+(board.cols+1)); 
+					int testPosition = (i+(board.getCols()+1)); 
 					while(!hit) {
 					if(board.getMarkerType(testPosition)==player.getColor()) {
 						board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 						hit = true; 
 					}
-					testPosition = testPosition-board.cols; 
+					testPosition = testPosition-board.getCols(); 
 					} 
 				}
 				}
@@ -278,36 +282,36 @@ int largestPos = board.cols*board.rows-1;
 			//diagonal NW
 			for (int i = 0; i < largestPos; i++) {
 				if(board.getMarkerType(i) == player.getColor() 
-						&& i % board.cols > 0 
-	                    && i % board.cols < (board.cols - 1)
-	                    && i/board.cols <= board.rows-2
-						&& board.getMarkerType(i+(board.cols-1)) == MarkerType.EMPTY) {
+						&& i % board.getCols() > 0 
+	                    && i % board.getCols() < (board.getCols() - 1)
+	                    && i/board.getCols() <= board.getRows()-2
+						&& board.getMarkerType(i+(board.getCols()-1)) == MarkerType.EMPTY) {
 					try {
-						board.placeMove((i+(board.cols-1)), player);
+						board.placeMove((i+(board.getCols()-1)), player);
 					} catch (NoSpaceLeftInColumnException e) {
 						
 					} 
-					if(board.getMarkerType(i+(board.cols-1))==board.getMarkerType(i)) {
+					if(board.getMarkerType(i+(board.getCols()-1))==board.getMarkerType(i)) {
 						boolean hit = false; 
-						int testPosition = (i+(board.cols-1)); 
+						int testPosition = (i+(board.getCols()-1)); 
 						while(!hit) {
 						if(board.getMarkerType(testPosition)==player.getColor()) {
 							board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 							hit = true; 
 						}
-						testPosition = testPosition-board.cols; 
+						testPosition = testPosition-board.getCols(); 
 						} 
-						return (i+(board.cols-1)); 
+						return (i+(board.getCols()-1)); 
 					}
 					else {
 						boolean hit = false; 
-						int testPosition = (i+(board.cols-1)); 
+						int testPosition = (i+(board.getCols()-1)); 
 						while(!hit) {
 						if(board.getMarkerType(testPosition)==player.getColor()) {
 							board.setMarkerPos(testPosition, MarkerType.EMPTY); 
 							hit = true; 
 						}
-						testPosition = testPosition-board.cols; 
+						testPosition = testPosition-board.getCols(); 
 						} 
 					}
 					}

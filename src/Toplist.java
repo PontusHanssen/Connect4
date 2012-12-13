@@ -1,7 +1,6 @@
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.io.BufferedOutputStream;
@@ -14,14 +13,16 @@ import javax.swing.JButton;
 import javax.swing.JDialog;	
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-
-
-
+/**
+ * Creates a Dialog-window to display the toplist. Contains functions to read, save, print and update the toplist.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
+@SuppressWarnings("serial")
 public class Toplist extends JDialog implements MouseListener {
 
 	private SortedMap<Integer, String> toplist = new TreeMap<Integer, String>();
-	public JLabel toplista;
+	private JLabel toplista;
 	
 	/**
 	 * Creates a new toplist.
@@ -126,7 +127,7 @@ public class Toplist extends JDialog implements MouseListener {
 	 * @param winner Winner of current game.
 	 */
 	public void updateToplist(Player winner) {
-			toplist.put(winner.moves, winner.name);
+			toplist.put(winner.getMoves(), winner.getName());
 		
 		invalidate();
 		repaint(); 

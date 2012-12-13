@@ -1,9 +1,13 @@
-
+/**
+ * Creates a new player for the game. Player has a name and a variable to store number of moves.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
 public class Player implements Cloneable {
 	
 	private MarkerType color;
-	public int moves=0;
-	public String name;
+	private int moves=0;
+	private String name;
 	
 	/**
 	 * Creates a new player.
@@ -30,7 +34,20 @@ public class Player implements Cloneable {
 	public int getMoves(){
 		return this.moves; 
 	}
+	
+	public void addMove() {
+		this.moves ++; 
+	}
+	public void resetMoves() {
+		this.moves = 0; 
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	public void setName(String name) {
+		this.name = name; 
+	}
+}
 	
 

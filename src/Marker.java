@@ -2,11 +2,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
+/** 
+ * Controls what marker is drawn in what position. Contains the paint method fšr the markers.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
 @SuppressWarnings("serial")
 public class Marker extends JPanel {
 	private Color color;

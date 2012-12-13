@@ -5,7 +5,12 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-
+/**
+ * Creates a Dialog-window to start the game where player can chose game level.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
+@SuppressWarnings("serial")
 public class StartDialog extends JDialog implements MouseListener{
 	
 	private JPanel panel;
@@ -42,10 +47,10 @@ public class StartDialog extends JDialog implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource().equals(human)) {
-			game.bot = false;
+			game.setBot(false);
 		}
 		else if(e.getSource().equals(bot)) {
-			game.bot = true;
+			game.setBot(true);
 				new LevelDialog(game); 
 		}
 		new PlayerNames(game);

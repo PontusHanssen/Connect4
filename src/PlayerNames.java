@@ -6,7 +6,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+/**
+ * Creates a Dialog-window to ask for player names.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
+@SuppressWarnings("serial")
 public class PlayerNames extends JDialog implements MouseListener {
 
 	private JPanel panel;
@@ -30,7 +35,7 @@ public class PlayerNames extends JDialog implements MouseListener {
 		panel = new JPanel();
 		label = new JLabel("Insert you names!");
 		red = new JTextField("Red");
-		if (!game.bot) {
+		if (!game.isBotGame()) {
 			yellow = new JTextField("Yellow");
 		} else {
 			yellow = new JTextField("Bot");
@@ -53,11 +58,11 @@ public class PlayerNames extends JDialog implements MouseListener {
 	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		game.playerRed.name = red.getText();
-		if (!game.bot) {
-			game.playerYellow.name = yellow.getText();
+		game.playerRed.setName(red.getText());
+		if (!game.isBotGame()) {
+			game.playerYellow.setName(yellow.getText());
 		} else {
-			game.botPlayer.name = yellow.getText();
+			game.botPlayer.setName(yellow.getText());
 		}
 		dispose();
 

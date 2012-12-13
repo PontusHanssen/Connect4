@@ -1,7 +1,7 @@
 1#Bot
-4#Bot
+4#Tova
 5#Bot
-6#Bot
+6#Red
 7#Red
 8#Bot
 9#Bot
@@ -9,6 +9,7 @@
 11#Red
 12#Bot
 13#Bot
+14#Yellow
 15#Bot
 17#Bot
 19#Bot

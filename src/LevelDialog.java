@@ -1,14 +1,17 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Creates a Dialog-window to ask the user for a level choice.
+ * @author Tova Linder och Pontus Persson
+ *
+ */
 @SuppressWarnings("serial")
 public class LevelDialog extends JDialog implements MouseListener {
 	private JPanel panel;
