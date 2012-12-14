@@ -10,7 +10,7 @@ public class Board implements Cloneable {
 	private MarkerType[][] board;
 	private int cols, rows;
 	private boolean boardFull = true;
-	private boolean horizDiagoWin = false;
+	
 
 	/**
 	 * Creates new game board.
@@ -71,13 +71,7 @@ public class Board implements Cloneable {
 		}
 
 	}
-	/**
-	 * Returns the variable that knows if it was a diagonal or horizontal win.
-	 * @return Returns true if it was a horizontal/diagonal win, else false.
-	 */
-	public boolean isHorizontalorDiagonalWin() {
-		return horizDiagoWin;
-	}
+	
 	/**
 	 * Returns the variable that knows if the board is full or not.
 	 * @return Returns true if board is full, otherwise false.
@@ -86,11 +80,119 @@ public class Board implements Cloneable {
 		return boardFull; 
 	}
 	
+	/** 
+	 * Checks if the marker x+dx, y+dy is within the board.
+	 * @param x Current position x
+	 * @param y Current position y
+	 * @param dx Delta-x
+	 * @param dy Delta-y
+	 * @return True if marker is on board, else false.
+	 */
+	private boolean isValidCheck(int x, int y) {
+		if(x >-1 && x < cols && y > -1 && y < rows) { 
+			System.out.println(x + " true  " + y);
+			return true;
+		}
+		else {
+			System.out.println(x + " false  " + y);
+			return false;
+		}
+		/*		if(dx==0 && x>=0 && x< cols && y>=0 && y<rows-1) {
+			return true; 
+		}
+		else if(dy==0 && x>=0 && x<cols-1 && y>=0 && y<rows-2) {
+			return true; 
+		}
+		else if(dx==-1 && x>=0 && x< cols-2 && y>=0 && y<rows-2) {
+			return true; 
+		}
+		else if(dx==1 && dy==1 && x>0 && x<cols-1 && y>=0 && y< rows-2) {
+			return true;
+		}
+		else {
+			return false;
+		}*/
+	}
+	/**
+	 * Checks for win every direction
+	 * @param currentPlayer
+	 * @return The player with 4 in a row, EMPTY if no winner.
+	 */
+	public MarkerType checkWin(Player currentPlayer) {
+		boardFull = true;
+		for(int c=0; c < cols; c++) {
+			if(board[rows-1][c] == MarkerType.EMPTY) {
+				boardFull = false; 
+			}
+		}
+		
+		MarkerType EW, NS, NE, NW;
+		EW = checkWinDirection(currentPlayer, 1, 0);
+		NS = checkWinDirection(currentPlayer, 0, 1);
+		NE = checkWinDirection(currentPlayer, 1, 1);
+		NW = checkWinDirection(currentPlayer, -1, 1);
+		//System.out.println("EW: " + EW + "\nNS: " + NS + "\nNE: " + NE + "\nNW: " + NW);
+		
+		if(EW != MarkerType.EMPTY) {
+			return EW;
+		}
+		else if(NS != MarkerType.EMPTY) {
+			return NS;
+		}
+		else if(NE != MarkerType.EMPTY) {
+			return NE;
+		}
+		else if(NW != MarkerType.EMPTY) {
+			return NW;
+		}
+		else {
+			return MarkerType.EMPTY;
+		}
+	}
+	
+	/**
+	 * Checks if there is a winner in a certain direction.
+	 * dx=0,dy=1 : Vertical
+	 * dx=1,dy=0 : Horizontal
+	 * dx=1,dy=1 : NorthWest Diagonal
+	 * dx=-1,dy=1 : NorthEast Diagonal
+	 * @param currentPlayer
+	 * @param dx
+	 * @param dy
+	 * @return 
+	 */
+	public MarkerType checkWinDirection(Player currentPlayer, int dx, int dy) {
+		int countInRow = 0, x = 0, y=0;
+		for(int i=0; i<rows*cols-1; i++) {
+			countInRow = 0;
+			x=i%cols;
+			y=i/cols;
+		
+		for(int checked = 0; checked < 4 && isValidCheck(x, y); checked++, x += dx, y +=dy) {
+			if(board[x][y] != currentPlayer.getColor()) {
+				countInRow=0;
+			}
+			else {
+				countInRow++; 
+			}
+			if(countInRow == 4) {
+				return currentPlayer.getColor();
+			}
+		}
+		}
+			return MarkerType.EMPTY; 
+		}
+		
+
+
+	
+	
 	/**
 	 * Checks if there is a winner.
 	 * @return MarkerType of winner.
 	 */
-	public MarkerType checkWin() {
+	/*public MarkerType checkWin() {
+		//check top row if board is full
 		boardFull = true;
 		horizDiagoWin = false;
 		for(int c=0; c < cols; c++) {
@@ -98,8 +200,6 @@ public class Board implements Cloneable {
 				boardFull = false; 
 			}
 		}
-		
-	 
 		MarkerType win = MarkerType.EMPTY;
 
 	// horizontal
@@ -159,7 +259,7 @@ public class Board implements Cloneable {
 
 		return win;
 
-	}
+	}*/
 	
 
 	/**

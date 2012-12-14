@@ -100,13 +100,13 @@ public class AI extends Player {
 				for(int k=0;k<largestPos;k++) {
 					Board secoundBoard = firstBoard.clone();
 					secoundBoard.placeMove(k, player);
-					if(secoundBoard.checkWin() == player.getColor()) {
-						if(firstBoard.isHorizontalorDiagonalWin()){
+					if(secoundBoard.checkWin(player) == player.getColor()) {
+						if(firstBoard.checkWinDirection(player, 1, 0) == player.getColor()){
 							return -1;
 						}
 						firstBoard.setMarkerPos(i, MarkerType.EMPTY);
 						firstBoard.setMarkerPos(k, MarkerType.EMPTY);
-						if(firstBoard.isHorizontalorDiagonalWin()){
+						if(firstBoard.checkWinDirection(player, 1, 0) == player.getColor()){
 							return -1;
 						}
 						else {
@@ -132,7 +132,7 @@ public class AI extends Player {
 			Board workingBoard = board.clone();
 			try {
 				workingBoard.placeMove(i, player);
-				if(workingBoard.checkWin() == player.getColor()) {
+				if(workingBoard.checkWin(player) == player.getColor()) {
 					workingBoard.setMarkerPos(i, MarkerType.EMPTY);
 					return i;
 				}
