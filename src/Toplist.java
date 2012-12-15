@@ -103,6 +103,7 @@ public class Toplist extends JDialog implements MouseListener {
 				String next = scanner.next();
 				file += next + "\n";
 			}
+			scanner.close();
 			file = file.substring(0, file.length()-1);
 		} catch (FileNotFoundException e) {
 			System.out.println(f1.getAbsolutePath() + ": Not found!");

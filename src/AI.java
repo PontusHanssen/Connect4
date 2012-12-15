@@ -101,12 +101,10 @@ public class AI extends Player {
 					Board secoundBoard = firstBoard.clone();
 					secoundBoard.placeMove(k, player);
 					if(secoundBoard.checkWin(player) == player.getColor()) {
-						if(firstBoard.checkWinDirection(player, 1, 0) == player.getColor()){
-							return -1;
-						}
 						firstBoard.setMarkerPos(i, MarkerType.EMPTY);
 						firstBoard.setMarkerPos(k, MarkerType.EMPTY);
-						if(firstBoard.checkWinDirection(player, 1, 0) == player.getColor()){
+						
+						if(firstBoard.checkWin(player) == player.getColor()){
 							return -1;
 						}
 						else {

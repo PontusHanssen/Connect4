@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /** 
- * Controls what marker is drawn in what position. Contains the paint method fšr the markers.
+ * Controls what marker is drawn in what position. Contains the paint method fï¿½r the markers.
  * @author Tova Linder och Pontus Persson
  *
  */
@@ -23,6 +23,8 @@ public class Marker extends JPanel {
 	 */
 	public Marker(MarkerType color, int pos) {
 		this.pos = pos;
+//		poslabel = new JLabel(Integer.toString(pos));
+//		add(poslabel);
 		switch (color) {
 		case EMPTY:
 			this.color = Color.WHITE;
